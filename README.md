@@ -1,7 +1,7 @@
 # excel-process-check 
 
 ## Description
-EXCEL.EXE が 30 分以上起動したままの場合、メール通知
+Email notifications if EXCEL.EXE is left running for more than 30 minutes.
 
 ## Requires
 - Windows
