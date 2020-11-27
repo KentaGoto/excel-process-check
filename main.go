@@ -15,25 +15,23 @@ func sendMail(from, to, cc, subject, body string) {
 	m.SetHeader("Subject", subject)
 	m.SetBody("text/plain", body)
 
-	d := gomail.NewDialer("<HOST>", 25, "<USER>", "<PASSWORD>") // ホスト名, ポート, ユーザー, パスワード
+	d := gomail.NewDialer("<HOST>", 25, "<USER>", "<PASSWORD>")
 	if err := d.DialAndSend(m); err != nil {
 		panic(err)
 	}
 }
 
 func main() {
-	// EXCELが30分以上起動しているかどうかをチェックする
+	// Check whether EXCEL has been running for more than 30 minutes
 	cmd := exec.Command("powershell.exe", "/c", "Get-Process -Name \"EXCEL\" | Where-Object {$_.StartTime -le (Get-Date).AddMinutes(-30)}")
 	out, _ := cmd.Output()
 
-	// outがtrueの場合
 	if regexp.MustCompile(`EXCEL`).MatchString(string(out)) == true {
-		// Mail通知
 		from := "<sender>"
 		to := "<destination>"
 		cc := "<cc>"
-		subject := "起動中プロセス"
-		body := "30分以上起動したままのEXCELプロセスがあります。\n" + string(out)
+		subject := "[WARNINGS] Process in progress"
+		body := "There are EXCEL processes that remain running for more than 30 minutes.\n" + string(out)
 
 		sendMail(from, to, cc, subject, body)
 	}
