@@ -1,7 +1,7 @@
 # excel-process-check 
 
 ## Description
-(((Template code))) 
+(((Template code)))  
 Email notifications if EXCEL.EXE is left running for more than 30 minutes.
 
 ## Requires
